@@ -1,6 +1,7 @@
 (require 'subr-x)
 
 (defvar animarum-table (make-hash-table :test #'equal))
+(defvar animarum-current-layout nil)
 
 (defun animarum-maybe-replace (name)
   (let ((prompt (format "A layout named %s already exists.  Replace it?" name)))
@@ -44,14 +45,19 @@
 (defun animarum-set-layout ()
   (interactive)
   (let* ((names (animarum-get-layouts))
-         (name (completing-read 
+         (name (completing-read
                 "What layout do you want? "
                 names
                 nil t ""))
          (config (gethash name animarum-table)))
     (progn (message "setting config: %s -> %s" name config)
            (sit-for 1)
-           (set-window-configuration config))))
+           (set-window-configuration config)
+           (setq animarum-current-layout name))))
+
+(defun animarum-show-layout ()
+  (interactive)
+  (message (format "%s" animarum-current-layout)))
 
 (defun animarum-list-layouts ()
   (interactive)
@@ -59,5 +65,5 @@
     (message (format
               "These are your layouts: \n%s"
               (string-join (mapcar (lambda (n) (concat "* " n)) (animarum-get-layouts)) "\n")))))
-    
+
 (provide 'animarum)
