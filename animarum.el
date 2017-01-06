@@ -3,7 +3,7 @@
 (defvar animarum-table (make-hash-table :test #'equal))
 
 (defun animarum-maybe-replace (name)
-  (let ((prompt (format "A layout named %s already exists.  Replace it?")))
+  (let ((prompt (format "A layout named %s already exists.  Replace it?" name)))
     (y-or-n-p prompt)))
 
 (defun animarum-get-layouts ()
