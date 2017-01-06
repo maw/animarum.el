@@ -25,13 +25,16 @@
                 "What layout do you want to get rid of? "
                 names
                 nil t "")))
-    
     (progn (remhash name animarum-table)
            (animarum-save))))
-  
+
 (defun animarum-save-layout ()
   (interactive)
-  (let ((name (read-from-minibuffer "name for layout")))
+  (let* ((names (animarum-get-layouts))
+         (name (completing-read
+                "name for layout"
+                names
+                nil nil "")))
     (if (if (not (eq nil (gethash name animarum-table)))
             (animarum-maybe-replace name)
           t)
