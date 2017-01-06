@@ -49,7 +49,12 @@
     (progn (message "setting config: %s -> %s" name config)
            (sit-for 1)
            (set-window-configuration config))))
+
+(defun animarum-list-layouts ()
+  (interactive)
+  (let ((layouts (animarum-get-layouts)))
+    (message (format
+              "These are your layouts: \n%s"
+              (string-join (mapcar (lambda (n) (concat "* " n)) (animarum-get-layouts)) "\n")))))
     
 (provide 'animarum)
-
-      
