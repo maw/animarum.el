@@ -47,6 +47,12 @@
         (let ((layout (current-window-configuration)))
           (animarum-put-and-save name layout)))))
 
+(defun animarum-save-current-layout ()
+  (interactive)
+  (let* ((current animarum-current-layout))
+    (if (not (eq nil current))
+        (animarum-put-and-save current (current-window-configuration)))))
+
 (defun animarum-set-layout ()
   (interactive)
   (let* ((names (animarum-get-layouts))
