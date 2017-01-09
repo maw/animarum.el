@@ -2,6 +2,11 @@
 
 (defvar animarum-table (make-hash-table :test #'equal))
 (defvar animarum-current-layout nil)
+(defvar animarum-do-sit-for nil)
+
+(defun animarum-maybe-sit-for (nsec)
+  (if animarum-do-sit-for
+      (sit-for ncsc)))
 
 (defun animarum-maybe-replace (name)
   (let ((prompt (format "A layout named %s already exists.  Replace it?" name)))
@@ -15,7 +20,7 @@
 
 (defun animarum-put-and-save (name layout)
   (progn (message "setting %s -> %s to %s" name layout animarum-table)
-         (sit-for 1)
+         (animarum-maybe-sit-for 1)
          (progn (puthash name layout animarum-table)
                 (animarum-save))))
 
@@ -51,7 +56,7 @@
                 nil t ""))
          (config (gethash name animarum-table)))
     (progn (message "setting config: %s -> %s" name config)
-           (sit-for 1)
+           (animarum-maybe-sit-for 1)
            (set-window-configuration config)
            (setq animarum-current-layout name))))
 
