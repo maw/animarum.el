@@ -51,7 +51,8 @@
   (interactive)
   (let* ((current animarum-current-layout))
     (if (not (eq nil current))
-        (animarum-put-and-save current (current-window-configuration)))))
+        (if (y-or-n-p (format "Are you sure you want to overwrite layout `%s'? " current))
+            (animarum-put-and-save current (current-window-configuration))))))
 
 (defun animarum-set-layout ()
   (interactive)
